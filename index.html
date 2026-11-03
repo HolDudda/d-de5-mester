@@ -31,13 +31,27 @@
       <button onclick="fecharModalDado()">OK</button>
     </div>
   </div>
+
   <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = './js/app.js';
-    document.body.appendChild(script);
-  });
-</script>
+    // --- CORREÇÃO DE SEGURANÇA E CARREGAMENTO ---
+    
+    // Define a função global antes do módulo carregar
+    window.fecharModalDado = function() {
+      const m = document.getElementById('modal-dado');
+      if (m) m.classList.add('escondido');
+    };
+
+    // Carrega o app.js de forma assíncrona e segura
+    window.addEventListener('load', () => {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = './js/app.js';
+      script.onerror = () => {
+        console.error("Erro ao carregar js/app.js. Verifique os caminhos das pastas.");
+        document.getElementById('conteudo').innerHTML = '<div style="padding:20px;color:white;text-align:center;"><h3>Erro de Carregamento</h3><p>Não foi possível achar o arquivo js/app.js</p></div>';
+      };
+      document.body.appendChild(script);
+    });
+  </script>
 </body>
 </html>
