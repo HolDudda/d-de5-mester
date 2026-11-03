@@ -1,0 +1,99 @@
+import { RACAS } from '../data/racas.js';
+import { CLASSES } from '../data/classes.js';
+
+export class Personagem {
+  constructor(dados = {}) {
+    this.nome = dados.nome || 'Aventureiro';
+    this.raca = dados.raca || null;
+    this.subRaca = dados.subRaca || null;
+    this.classe = dados.classe || null;
+    this.subClasse = dados.subClasse || null;
+    this.antecedente = dados.antecedente || null;
+    this.nivel = dados.nivel || 1;
+    this.tendencia = dados.tendencia || 'Neutro';
+    this.atributos = dados.atributos || { FOR: 10, DES: 10, CON: 10, INT: 10, SAB: 10, CAR: 10 };
+    this.pvMax = dados.pvMax || 0;
+    this.pvAtual = dados.pvAtual || 0;
+    this.ca = dados.ca || 10;
+    this.iniciativa = dados.iniciativa || 0;
+    this.proficiencias = dados.proficiencias || [];
+    this.idiomas = dados.idiomas || ['Comum'];
+    this.equipamento = dados.equipamento || [];
+    this.magiasConhecidas = dados.magiasConhecidas || [];
+    this.truques = dados.truques || [];
+    this.espacosMagia = dados.espacosMagia || {};
+    this.caracteristicas = dados.caracteristicas || [];
+    this.xp = dados.xp || 0;
+    this.ouro = dados.ouro || 0;
+  }
+
+  aplicarBonusRacial() {
+    if (!this.raca) return;
+    const r = RACAS.find(x => x.id === this.raca);
+    if (!r) return;
+    const bonus = { ...r.bonus };
+    if (this.subRaca) {
+      const sr = r.subRacas.find(x => x.id === this.subRaca);
+      if (sr && sr.bonus) {
+        for (const [k, v] of Object.entries(sr.bonus)) bonus[k] = (bonus[k] || 0) + v;
+      }
+    }
+    for (const [k, v] of Object.entries(bonus)) {
+      if (this.atributos[k] !== undefined) this.atributos[k] += v;
+    }
+  }
+
+  calcularModificador(atributo) {
+    const valor = this.atributos[atributo] || 10;
+    return Math.floor((valor - 10) / 2);
+  }
+
+  calcularProficiencia() {
+    return 2 + Math.floor((this.nivel - 1) / 4);
+  }
+
+  calcularPV() {
+    if (!this.classe) return 0;
+    const c = CLASSES.find(x => x.id === this.classe);
+    if (!c) return 0;
+    const modCon = this.calcularModificador('CON');
+    let pv = c.dadoVida + modCon;
+    for (let i = 2; i <= this.nivel; i++) {
+      pv += Math.floor(c.dadoVida / 2) + 1 + modCon;
+    }
+    return Math.max(1, pv);
+  }
+
+  calcularCA() {
+    const modDes = this.calcularModificador('DES');
+    let ca = 10 + modDes;
+    const armadura = this.equipamento.find(e => e.tipo === 'armadura');
+    if (armadura) {
+      ca = parseInt(armadura.caBase || 10) + (armadura.caDesMax === 0 ? 0 : Math.min(modDes, armadura.caDesMax || 99));
+    }
+    const escudo = this.equipamento.find(e => e.tipo === 'escudo');
+    if (escudo) ca += 2;
+    return ca;
+  }
+
+  ganharXP(xp) {
+    this.xp += xp;
+    const tabela = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
+    let novoNivel = 1;
+    for (let i = 0; i < tabela.length; i++) {
+      if (this.xp >= tabela[i]) novoNivel = i + 1;
+    }
+    if (novoNivel > this.nivel) {
+      const ganhos = novoNivel - this.nivel;
+      this.nivel = novoNivel;
+      this.pvMax = this.calcularPV();
+      this.pvAtual = this.pvMax;
+      return ganhos;
+    }
+    return 0;
+  }
+
+  toJSON() { return { ...this }; }
+
+  static fromJSON(obj) { return Object.assign(new Personagem(), obj); }
+}
