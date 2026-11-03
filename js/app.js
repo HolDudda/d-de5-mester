@@ -1,4 +1,4 @@
-import { el, criar, rolarDado, rolarVarios, mostrarResultadoDado, fecharModalDado, toast, salvarLocal, carregarLocal } from './ui/utils.js';
+ import { el, criar, rolarDado, rolarVarios, mostrarResultadoDado, fecharModalDado, toast, salvarLocal, carregarLocal } from './ui/utils.js';
 import { renderCriacaoPersonagem } from './ui/criacao-personagem.js';
 import { renderNovaCampanha, renderCampanha } from './ui/campanha.js';
 import { renderCombate } from './ui/combate-ui.js';
