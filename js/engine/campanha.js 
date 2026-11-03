@@ -1,0 +1,137 @@
+import { MONSTROS } from '../data/monstros.js';
+import { ITENS_MAGICOS, RARIDADES } from '../data/itens-magicos.js';
+import { GEMAS, OBJETOS_ARTE } from '../data/tesouros.js';
+import { DEUSES } from '../data/deuses.js';
+import {
+  TABELA_EVENTOS_MUNDO, TABELA_LOCAIS_MASMORRA, TABELA_CRIADOR_MASMORRA,
+  TABELA_PROPOSITO_MASMORRA, TABELA_HISTORIA_MASMORRA, TABELA_OBJETIVOS_MASMORRA,
+  TABELA_NOMES_PDM, TABELA_MANEIRISMOS, TABELA_IDEAIS, TABELA_VINCULOS,
+  TABELA_DEFEITOS, TABELA_INTRODUCAO_AVENTURA, TABELA_CLIMAX_AVENTURA,
+  TABELA_COMPLICACOES, TABELA_REVIRAVOLTAS, TABELA_MISSOES_SECUNDARIAS,
+  TABELA_FORMAS_GOVERNO
+} from '../data/tabelas.js';
+
+export function gerarAleatorio(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function rolarDado(faces, qtd = 1) {
+  let total = 0;
+  for (let i = 0; i < qtd; i++) total += Math.floor(Math.random() * faces) + 1;
+  return total;
+}
+
+export function gerarNomePessoa() {
+  const racas = Object.keys(TABELA_NOMES_PDM);
+  const r = gerarAleatorio(racas);
+  return gerarAleatorio(TABELA_NOMES_PDM[r]);
+}
+
+export function gerarPDM() {
+  return {
+    id: Date.now() + Math.random(),
+    nome: gerarNomePessoa(),
+    ocupacao: gerarAleatorio(['Ferreiro','Taverneiro','Mercador','Guarda','Sacerdote','Nobre','Camponês','Bardo','Ladrão','Mago','Soldado','Caçador','Eremita','Escriba','Artista']),
+    maneirismo: gerarAleatorio(TABELA_MANEIRISMOS),
+    ideal: gerarAleatorio([...TABELA_IDEAIS.bons, ...TABELA_IDEAIS.leais, ...TABELA_IDEAIS.neutros, ...TABELA_IDEAIS.caoticos, ...TABELA_IDEAIS.maus]),
+    vinculo: gerarAleatorio(TABELA_VINCULOS),
+    defeito: gerarAleatorio(TABELA_DEFEITOS)
+  };
+}
+
+export function gerarMasmorra() {
+  const salas = [];
+  const qtdSalas = rolarDado(6) + 4;
+  for (let i = 0; i < qtdSalas; i++) {
+    salas.push({
+      numero: i + 1,
+      tipo: i === 0 ? 'entrada' : gerarAleatorio(['covil','salão','armadilha','tesouro','sala vazia','templo','prisão']),
+      conteudo: gerarConteudoSala()
+    });
+  }
+  return {
+    local: gerarAleatorio(TABELA_LOCAIS_MASMORRA),
+    criador: gerarAleatorio(TABELA_CRIADOR_MASMORRA),
+    proposito: gerarAleatorio(TABELA_PROPOSITO_MASMORRA),
+    historia: gerarAleatorio(TABELA_HISTORIA_MASMORRA),
+    salas
+  };
+}
+
+export function gerarConteudoSala() {
+  const opcoes = [
+    () => ({ tipo: 'monstro', monstro: gerarAleatorio(MONSTROS), descricao: 'Um monstro aguarda na sala.' }),
+    () => ({ tipo: 'armadilha', descricao: 'Uma armadilha escondida.' }),
+    () => ({ tipo: 'tesouro', tesouro: gerarTesouroAleatorio(), descricao: 'Um tesouro brilha no chão.' }),
+    () => ({ tipo: 'vazio', descricao: 'A sala parece vazia, mas há marcas no chão.' }),
+    () => ({ tipo: 'pdm', pdm: gerarPDM(), descricao: 'Um NPC está aqui.' })
+  ];
+  return gerarAleatorio(opcoes)();
+}
+
+export function gerarTesouroAleatorio() {
+  const tipo = gerarAleatorio(['moedas','gema','objeto','item']);
+  if (tipo === 'moedas') return { tipo: 'moedas', valor: rolarDado(100, 10), moeda: 'po' };
+  if (tipo === 'gema') {
+    const faixa = gerarAleatorio(Object.keys(GEMAS));
+    return { tipo: 'gema', valor: parseInt(faixa), nome: gerarAleatorio(GEMAS[faixa]) };
+  }
+  if (tipo === 'objeto') {
+    const faixa = gerarAleatorio(Object.keys(OBJETOS_ARTE));
+    return { tipo: 'objeto', valor: parseInt(faixa), nome: gerarAleatorio(OBJETOS_ARTE[faixa]) };
+  }
+  const raridade = gerarAleatorio(RARIDADES.slice(0, 4));
+  const pool = ITENS_MAGICOS.filter(i => i.raridade === raridade);
+  return { tipo: 'item', item: gerarAleatorio(pool.length ? pool : ITENS_MAGICOS) };
+}
+
+export function gerarGancho() {
+  return {
+    objetivo: gerarAleatorio(TABELA_OBJETIVOS_MASMORRA),
+    introducao: gerarAleatorio(TABELA_INTRODUCAO_AVENTURA),
+    climax: gerarAleatorio(TABELA_CLIMAX_AVENTURA),
+    complicacao: gerarAleatorio(TABELA_COMPLICACOES),
+    reviravolta: gerarAleatorio(TABELA_REVIRAVOLTAS),
+    missaoSecundaria: gerarAleatorio(TABELA_MISSOES_SECUNDARIAS)
+  };
+}
+
+export function gerarCampanha(tema = null) {
+  const masmorras = [];
+  const qtd = rolarDado(4) + 2;
+  for (let i = 0; i < qtd; i++) masmorras.push(gerarMasmorra());
+  const ganchos = [];
+  for (let i = 0; i < 4; i++) ganchos.push(gerarGancho());
+  return {
+    id: Date.now(),
+    nome: `Reino de ${gerarNomePessoa()} - ${gerarAleatorio(TABELA_EVENTOS_MUNDO)}`,
+    tema: tema || gerarAleatorio(['Fantasia Heroica','Espada e Feitiçaria','Fantasia Sombria','Mistério','Intriga','Guerra','Wuxia']),
+    reino: `Reino de ${gerarNomePessoa()}`,
+    evento: gerarAleatorio(TABELA_EVENTOS_MUNDO),
+    governo: gerarAleatorio(TABELA_FORMAS_GOVERNO),
+    deusPatrono: gerarAleatorio(DEUSES),
+    masmorras,
+    ganchos,
+    pdms: [gerarPDM(), gerarPDM(), gerarPDM(), gerarPDM()],
+    criadoEm: new Date().toISOString(),
+    log: [],
+    party: [],
+    sessoes: []
+  };
+}
+
+export function gerarEncontroAleatorio(tipo = 'floresta', nivelGrupo = 1) {
+  const encontros = {
+    floresta: ['1 pantera deslocadora','1d4 gnolls e 2d4 hienas','1 coruja gigante','1 urso-coruja','1d4 centauros','1d4 pixies','1 ente','1 unicórnio'],
+    urbano: ['Briga de taverna','Batedor de carteira','Guardas assediando','Procissão','Incêndio','Protesto','Carroça em fuga','Garoto de rua'],
+    mar: ['Navio pirata','Navio fantasma','Vórtice','Povo do mar comerciantes','Kraken avistado','Baleia assassina','Iceberg'],
+    subterraneo: ['1d4 goblins','1 urso-coruja','1 cubo gelatinoso','1 mímico','1d4 drow','1 beholder','1 observador zumbi','1 limo cinzento']
+  };
+  const lista = encontros[tipo] || encontros.floresta;
+  return {
+    descricao: gerarAleatorio(lista),
+    tipo,
+    nivel: nivelGrupo,
+    dificuldade: gerarAleatorio(['Fácil','Média','Difícil','Mortal'])
+  };
+}
