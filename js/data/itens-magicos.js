@@ -1,0 +1,37 @@
+export const ITENS_MAGICOS = [
+  { nome:'Poção de Cura', raridade:'comum', tipo:'poção', preco:'50 po', desc:'Recupera 2d4+2 PV.' },
+  { nome:'Poção de Cura Maior', raridade:'incomum', tipo:'poção', preco:'500 po', desc:'Recupera 4d4+4 PV.' },
+  { nome:'Poção de Cura Superior', raridade:'raro', tipo:'poção', preco:'5.000 po', desc:'Recupera 8d4+8 PV.' },
+  { nome:'Poção de Cura Suprema', raridade:'muito raro', tipo:'poção', preco:'50.000 po', desc:'Recupera 10d4+20 PV.' },
+  { nome:'Espada Longa +1', raridade:'incomum', tipo:'arma', preco:'500 po', desc:'+1 ataque e dano.' },
+  { nome:'Espada Longa +2', raridade:'raro', tipo:'arma', preco:'5.000 po', desc:'+2 ataque e dano.' },
+  { nome:'Espada Longa +3', raridade:'muito raro', tipo:'arma', preco:'50.000 po', desc:'+3 ataque e dano.' },
+  { nome:'Armadura de Placas +1', raridade:'raro', tipo:'armadura', preco:'5.000 po', desc:'+1 CA.' },
+  { nome:'Armadura de Placas +3', raridade:'lendário', tipo:'armadura', preco:'500.000 po', desc:'+3 CA.' },
+  { nome:'Escudo +1', raridade:'incomum', tipo:'escudo', preco:'500 po', desc:'+1 CA.' },
+  { nome:'Anel de Proteção', raridade:'raro', tipo:'anel', preco:'5.000 po', desc:'+1 CA e resistências.' },
+  { nome:'Anel de Invisibilidade', raridade:'lendário', tipo:'anel', preco:'500.000 po', desc:'Invisibilidade à vontade.' },
+  { nome:'Cinto de Força da Colina', raridade:'raro', tipo:'item', preco:'5.000 po', desc:'FOR 21.' },
+  { nome:'Cinto de Força do Fogo', raridade:'muito raro', tipo:'item', preco:'50.000 po', desc:'FOR 25.' },
+  { nome:'Cinto de Força da Tempestade', raridade:'lendário', tipo:'item', preco:'500.000 po', desc:'FOR 29.' },
+  { nome:'Botas Élficas', raridade:'incomum', tipo:'item', preco:'500 po', desc:'Passos silenciosos.' },
+  { nome:'Botas de Velocidade', raridade:'raro', tipo:'item', preco:'5.000 po', desc:'Ação bônus: Disparada.' },
+  { nome:'Capa de Proteção', raridade:'incomum', tipo:'item', preco:'500 po', desc:'+1 CA e resistências.' },
+  { nome:'Capa de Deslocamento', raridade:'raro', tipo:'item', preco:'5.000 po', desc:'Ataques contra você têm desvantagem.' },
+  { nome:'Manto de Invisibilidade', raridade:'lendário', tipo:'item', preco:'500.000 po', desc:'Invisibilidade (2h).' },
+  { nome:'Colar de Bolas de Fogo', raridade:'raro', tipo:'item', preco:'5.000 po', desc:'1d6+3 bolas de fogo.' },
+  { nome:'Periapto de Saúde', raridade:'incomum', tipo:'item', preco:'500 po', desc:'CON 19.' },
+  { nome:'Tiara do Intelecto', raridade:'incomum', tipo:'item', preco:'500 po', desc:'INT 19.' },
+  { nome:'Cajado do Arcano', raridade:'lendário', tipo:'cajado', preco:'500.000 po', desc:'Absorve magias, conjura várias.' },
+  { nome:'Cajado do Poder', raridade:'muito raro', tipo:'cajado', preco:'50.000 po', desc:'+2 CA, magias.' },
+  { nome:'Varinha de Mísseis Mágicos', raridade:'incomum', tipo:'varinha', preco:'500 po', desc:'Conjura mísseis mágicos.' },
+  { nome:'Varinha de Bola de Fogo', raridade:'raro', tipo:'varinha', preco:'5.000 po', desc:'Conjura bola de fogo.' },
+  { nome:'Varinha de Relâmpagos', raridade:'raro', tipo:'varinha', preco:'5.000 po', desc:'Conjura relâmpago.' },
+  { nome:'Bastão de Absorção', raridade:'muito raro', tipo:'bastão', preco:'50.000 po', desc:'Absorve magias.' },
+  { nome:'Baralho das Surpresas', raridade:'lendário', tipo:'item', preco:'500.000 po', desc:'Cartas com efeitos aleatórios.' },
+  { nome:'Espada Vorpal', raridade:'lendário', tipo:'arma', preco:'500.000 po', desc:'+3, decapita em 20 natural.' },
+  { nome:'Vingadora Sagrada', raridade:'lendário', tipo:'arma', preco:'500.000 po', desc:'+3, +2d10 radiante vs corruptores/MV.' }
+];
+
+export const RARIDADES = ['comum','incomum','raro','muito raro','lendário'];
+export const TIPOS_ITEM = ['arma','armadura','escudo','poção','anel','cajado','varinha','bastão','item maravilhoso','pergaminho'];
