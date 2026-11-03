@@ -1,0 +1,14 @@
+export const ANTECEDENTES = [
+  { id: 'acolito', nome: 'Acólito', pericias: ['Intuição','Religião'], ferramentas: ['2 idiomas'], equipamento: ['Símbolo sagrado','Livro de orações','5 varetas de incenso','Vestes cerimoniais','15 po'], caracteristica: 'Abrigo dos Fiéis' },
+  { id: 'artista', nome: 'Artista', pericias: ['Acrobacia','Atuação'], ferramentas: ['Disfarce','Instrumento musical'], equipamento: ['Instrumento musical','Favor de admirador','Trajes','15 po'], caracteristica: 'Aplausos do Público' },
+  { id: 'artesao-guilda', nome: 'Artesão de Guilda', pericias: ['Intuição','Persuasão'], ferramentas: ['Ferramentas de artesão'], equipamento: ['Ferramentas de artesão','Carta de guilda','15 po'], caracteristica: 'Associação de Guilda' },
+  { id: 'charlatao', nome: 'Charlatão', pericias: ['Enganação','Prestidigitação'], ferramentas: ['Disfarce','Falsificação'], equipamento: ['Roupas finas','Kit de disfarce','15 po'], caracteristica: 'Identidade Falsa' },
+  { id: 'criminoso', nome: 'Criminoso', pericias: ['Enganação','Furtividade'], ferramentas: ['Ferramentas de ladrão'], equipamento: ['Pé de cabra','Roupas escuras','15 po'], caracteristica: 'Contato Criminal' },
+  { id: 'eremita', nome: 'Eremita', pericias: ['Medicina','Religião'], ferramentas: ['Kit de herbalismo'], equipamento: ['Estojo de herbalismo','Inscrições','15 po'], caracteristica: 'Descoberta' },
+  { id: 'forasteiro', nome: 'Forasteiro', pericias: ['Atletismo','Sobrevivência'], ferramentas: ['Instrumento musical'], equipamento: ['Cajado','Armadilha de caça','Troféu','15 po'], caracteristica: 'Andarilho' },
+  { id: 'heroi-povo', nome: 'Herói do Povo', pericias: ['Adestrar Animais','Sobrevivência'], ferramentas: ['Ferramentas de artesão','Veículos terrestres'], equipamento: ['Ferramentas','Pá','Panela de ferro','15 po'], caracteristica: 'Hospitalidade Rústica' },
+  { id: 'nobre', nome: 'Nobre', pericias: ['História','Persuasão'], ferramentas: ['Jogo de tabuleiro'], equipamento: ['Roupas finas','Anel de sinete','Pergaminho de linhagem','25 po'], caracteristica: 'Posição de Privilégio' },
+  { id: 'orfao', nome: 'Órfão', pericias: ['Furtividade','Prestidigitação'], ferramentas: ['Disfarce','Ferramentas de ladrão'], equipamento: ['Faca pequena','Mapa da cidade','Rato de estimação','10 po'], caracteristica: 'Segredos da Cidade' },
+  { id: 'sabio', nome: 'Sábio', pericias: ['Arcanismo','História'], ferramentas: ['2 idiomas'], equipamento: ['Tinta e pena','Faca pequena','Carta de colega','10 po'], caracteristica: 'Pesquisador' },
+  { id: 'soldado', nome: 'Soldado', pericias: ['Atletismo','Intimidação'], ferramentas: ['Jogo de cartas','Veículos terrestres'], equipamento: ['Insígnia de patente','Troféu','Baralho','10 po'], caracteristica: 'Patente Militar' }
+];
