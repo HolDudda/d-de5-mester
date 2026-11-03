@@ -177,7 +177,8 @@ function etapaRevisao() {
   div.appendChild(criar('h3', { style: 'color:#d4a84f;margin-bottom:10px;' }, '✨ Revisão do Personagem'));
   rascunho.nome = el('inp-nome')?.value || rascunho.nome || 'Aventureiro';
   const raca = RACAS.find(r => r.id === rascunho.raca);
-  const subRaca = raca?.subRacas?.find(s => s.id === rascunho.subRaca);
+  // CORRIGIDO AQUI: subRacas (tudo junto)
+  const subRaca = raca?.subRacas?.find(s => s.id === rascunho.subRaca); 
   const classe = CLASSES.find(c => c.id === rascunho.classe);
   const subClasse = classe?.subclasses?.find(s => s.id === rascunho.subClasse);
   const antecedente = ANTECEDENTES.find(a => a.id === rascunho.antecedente);
